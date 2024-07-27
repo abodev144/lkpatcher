@@ -1,0 +1,57 @@
+name: Combined CI
+
+on:
+  push:
+    branches: [ master ]
+  pull_request:
+    branches: [ master ]
+  workflow_dispatch:
+    branches: [ master ]
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    steps:
+      - uses: actions/checkout@v2
+
+      - name: Set up Python 3.11
+        uses: actions/setup-python@v2
+        with:
+          python-version: '3.11'
+
+      - name: Install dependencies
+        run: |
+          sudo apt-get install -y git
+          python -m pip install --upgrade pip
+          pip install --upgrade git+https://github.com/R0rt1z2/liblk
+          pip install --upgrade git+https://github.com/R0rt1z2/lkpatcher
+
+      - name: Run liblk to get partition details
+        run: |
+          # Create a Python script to use liblk to get partition details
+          echo "import sys
+from liblk.LkImage import LkImage
+
+def main():
+    lk_image = LkImage(sys.argv[1])
+    partitions = lk_image.get_partition_list()
+    for partition in partitions:
+        print(str(partition))
+
+if __name__ == '__main__':
+    main()" > get_partitions.py
+          # Run the script
+          python get_partitions.py lk.bin
+
+      - name: Create output directory
+        run: mkdir -p output
+
+      - name: Run LK Patcher
+        run: python3 -m lkpatcher -o output/lk-patched.bin -j patches.json lk.bin
+
+      - name: Upload patched image
+        uses: actions/upload-artifact@v2
+        with:
+          name: lk-patched-img
+          path: output/lk-patched.bin
