@@ -1,4 +1,14 @@
 {
+  "patches": [
+    {
+      "name": "Disable Only System Partition Message",
+      "needles": ["E59F0000E080000F"],
+      "replacements": ["E320F000E320F000"]
+    }
+  ]
+}
+
+{
     "fastboot": {
         "2de9f04fadf5ac5d": "00207047",
         "f0b5adf5925d": "00207047"
