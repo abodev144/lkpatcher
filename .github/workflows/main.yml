@@ -31,26 +31,20 @@ jobs:
       - name: Create output directory
         run: mkdir -p output
 
-      - name: Run liblk to get partition details
+      - name: Run LK Patcher
         run: |
           echo "import sys
 from liblk.LkImage import LkImage
+from lkpatcher.patcher import LkPatcher
 
 def main():
     lk_image = LkImage(sys.argv[1])
     partitions = lk_image.get_partition_list()
-    for partition in partitions:
-        print(str(partition))
+    print('Partitions:', partitions)
+    patcher = LkPatcher(image=sys.argv[1], patches='patches.json')
+    patched_image = patcher.patch(output='output/lk-patched.bin')
+    print('Patched image saved as', patched_image)
 
 if __name__ == '__main__':
-    main()" > get_partitions.py
-          python get_partitions.py lk.bin
-
-      - name: Run LK Patcher
-        run: python3 -m lkpatcher -o output/lk-patched.bin -j patches.json lk.bin
-
-      - name: Upload patched image
-        uses: actions/upload-artifact@v2
-        with:
-          name: lk-patched-bin
-          path: output/lk-patched.bin
+    main()" > process_image.py
+          python process_image.py lk.bin
