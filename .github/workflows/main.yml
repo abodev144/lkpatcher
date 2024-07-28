@@ -22,6 +22,7 @@ jobs:
 
       - name: Install dependencies
         run: |
+          sudo apt-get update
           sudo apt-get install -y git
           python -m pip install --upgrade pip
           pip install --upgrade git+https://github.com/R0rt1z2/liblk
@@ -29,7 +30,6 @@ jobs:
 
       - name: Run liblk to get partition details
         run: |
-          # Create a Python script to use liblk to get partition details
           echo "import sys
 from liblk.LkImage import LkImage
 
@@ -41,7 +41,6 @@ def main():
 
 if __name__ == '__main__':
     main()" > get_partitions.py
-          # Run the script
           python get_partitions.py lk.bin
 
       - name: Create output directory
