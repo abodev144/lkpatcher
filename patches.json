@@ -1,12 +1,13 @@
 {
   "patches": [
     {
-      "name": "Disable Only System Partition Message",
-      "needles": ["E59F0000E080000F"],
-      "replacements": ["E320F000E320F000"]
+      "name": "Disable Only System Partition Flashing",
+      "needles": ["7EE00306"],
+      "replacements": ["00000000"]
     }
   ]
 }
+
 
 {
     "fastboot": {
