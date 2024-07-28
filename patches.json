@@ -3,10 +3,11 @@
     {
       "name": "Disable Only System Partition Flashing",
       "needles": ["7EE00306"],
-      "replacements": ["00000000"]
+      "replacements": ["00000000"] 
     }
   ]
 }
+
 
 
 {
