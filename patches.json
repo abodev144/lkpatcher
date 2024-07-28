@@ -1,16 +1,4 @@
 {
-  "patches": [
-    {
-      "name": "Disable Only System Partition Flashing",
-      "needles": ["7EE00306"],
-      "replacements": ["00000000"] 
-    }
-  ]
-}
-
-
-
-{
     "fastboot": {
         "2de9f04fadf5ac5d": "00207047",
         "f0b5adf5925d": "00207047"
