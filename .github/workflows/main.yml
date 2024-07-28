@@ -6,14 +6,14 @@ on:
   pull_request:
     branches: [ master ]
   workflow_dispatch:
-    branches: [ master ]
 
 jobs:
   build:
     runs-on: ubuntu-latest
 
     steps:
-      - uses: actions/checkout@v2
+      - name: Checkout repository
+        uses: actions/checkout@v2
 
       - name: Set up Python 3.11
         uses: actions/setup-python@v2
@@ -28,8 +28,8 @@ jobs:
           pip install --upgrade git+https://github.com/R0rt1z2/liblk
           pip install --upgrade git+https://github.com/R0rt1z2/lkpatcher
 
-      - name: List files for debugging
-        run: ls -R
+      - name: Create output directory
+        run: mkdir -p output
 
       - name: Run liblk to get partition details
         run: |
@@ -45,9 +45,6 @@ def main():
 if __name__ == '__main__':
     main()" > get_partitions.py
           python get_partitions.py lk.bin
-
-      - name: Create output directory
-        run: mkdir -p output
 
       - name: Run LK Patcher
         run: python3 -m lkpatcher -o output/lk-patched.bin -j patches.json lk.bin
