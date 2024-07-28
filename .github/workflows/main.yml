@@ -28,6 +28,9 @@ jobs:
           pip install --upgrade git+https://github.com/R0rt1z2/liblk
           pip install --upgrade git+https://github.com/R0rt1z2/lkpatcher
 
+      - name: List files for debugging
+        run: ls -R
+
       - name: Run liblk to get partition details
         run: |
           echo "import sys
