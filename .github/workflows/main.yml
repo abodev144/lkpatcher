@@ -44,10 +44,10 @@ def main():
 
 if __name__ == '__main__':
     main()" > get_partitions.py
-          python get_partitions.py lk.bin || exit 1
+          python get_partitions.py lk.bin
 
       - name: Run LK Patcher
-        run: python3 -m lkpatcher -o output/lk-patched.bin -j patches.json lk.bin || exit 1
+        run: python3 -m lkpatcher -o output/lk-patched.bin -j patches.json lk.bin
 
       - name: Upload patched image
         uses: actions/upload-artifact@v2
