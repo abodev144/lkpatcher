@@ -53,5 +53,5 @@ if __name__ == '__main__':
       - name: Upload patched image
         uses: actions/upload-artifact@v2
         with:
-          name: lk-patched-img
+          name: lk-patched-bin
           path: output/lk-patched.bin
